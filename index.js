@@ -4,6 +4,20 @@ const mongoose = require('mongoose');
 const Recipe = require('./models/Recipe.model');
 // Import of the data from './data.json'
 const data = require('./data');
+
+const MONGODB_URI = 'mongodb://localhost:27017/recipe-app';
+
+// Connection to the database "recipe-app"
+mongoose
+  .connect(MONGODB_URI)
+  .then(x => {
+    console.log(`Connected to the database: "${x.connection.name}"`);
+    // Before adding any recipes to the database, let's remove all existing ones const mongoose = require('mongoose');
+
+// Import of the model Recipe from './models/Recipe.model.js'
+const Recipe = require('./models/Recipe.model');
+// Import of the data from './data.json'
+const data = require('./data');
 const { db } = require('./models/Recipe.model');
 
 const MONGODB_URI = 'mongodb://localhost:27017/recipe-app';
@@ -18,7 +32,7 @@ try {
     await Recipe.deleteMany()
     console.log('database connected')
       
-    let newRecipe = { title: 'Pasta Ragu', level: 'Easy Peasy', ingredients: ['pasta', 'mince meat', 'tomatoes', 'onions', 'garlic', 'spinach'], cuisine: 'Italian', dishType: 'main_course', image: 'https://www.insidetherustickitchen.com/wp-content/uploads/2017/11/Italian-Beef-Ragu-Square-Inside-the-rustic-kitchen.jpg', duration: 30, creator: 'Chef Hollie'};
+    let newRecipe = { title: 'Pasta Ragu', level: 'Easy Peasy', ingredients: ['pasta', 'mince meat', 'tomatoes', 'onions', 'garlic', 'spinach'], cuisine: 'Italian', dishType: 'main_course', duration: 30, creator: 'Chef'};
 
     let createdRecipe = await Recipe.create(newRecipe);
     console.log(createdRecipe.title);
@@ -44,3 +58,11 @@ catch (error) {
 }
 
 updateRecipes();
+    return Recipe.deleteMany()
+  })
+  .then(() => {
+    // Run your code here, after you have insured that the connection was made
+  })
+  .catch(error => {
+    console.error('Error connecting to the database', error);
+  });
